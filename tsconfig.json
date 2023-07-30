@@ -9,11 +9,17 @@
     "jsxImportSource": "solid-js",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "@src/*": [
+        "src/*"
+      ],
+    },
     "types": [
       "node",
       "vite/client",
       "@types/jest",
       "@testing-library/jest-dom"
-    ],
+    ]
   }
 }

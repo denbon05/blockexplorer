@@ -1,7 +1,7 @@
-import { Alchemy, Network } from 'alchemy-sdk';
+import { Alchemy, Network, type AlchemySettings } from 'alchemy-sdk';
 import { APP_ALCHEMY_API_KEY } from '../constants';
 
-const settings = {
+const settings: AlchemySettings = {
   apiKey: APP_ALCHEMY_API_KEY,
   network: Network.ETH_MAINNET,
 };
@@ -13,4 +13,7 @@ const settings = {
 //   https://docs.alchemy.com/reference/alchemy-sdk-api-surface-overview#api-surface
 const alchemy = new Alchemy(settings);
 
-export const fetchBlock = async () => alchemy.core.getBlockNumber();
+export const fetchLastBlockNumber = async () => alchemy.core.getBlockNumber();
+
+export const fetchBlock = async (blockNumber: number) =>
+  alchemy.core.getBlock(blockNumber);

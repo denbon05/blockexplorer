@@ -5,6 +5,9 @@ const config: Config = {
   setupFilesAfterEnv: [
     '<rootDir>/node_modules/@testing-library/jest-dom/extend-expect',
   ],
+  moduleNameMapper: {
+    '^@src$': '<rootDir>/src/$1',
+  },
 };
 
 export default config;

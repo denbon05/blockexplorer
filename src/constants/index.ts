@@ -1,3 +1,4 @@
 const { APP_ALCHEMY_API_KEY } = process.env;
+const DEFAULT_ITEMS_PER_PAGE = 20;
 
-export { APP_ALCHEMY_API_KEY };
+export { APP_ALCHEMY_API_KEY, DEFAULT_ITEMS_PER_PAGE };
