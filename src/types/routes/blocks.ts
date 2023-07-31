@@ -6,3 +6,7 @@ export type BlocksSearchParams = Params & {
 };
 
 export type ETHBlock = Awaited<ReturnType<typeof fetchBlock>>;
+
+export type BlockFormatted = Omit<ETHBlock, 'timestamp'> & {
+  timestamp: string;
+};

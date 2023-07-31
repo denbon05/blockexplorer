@@ -1,7 +1,12 @@
 import { useSearchParams } from '@solidjs/router';
 import { fetchBlock, fetchLastBlockNumber } from '@src/api';
 import type { PaginatorOpts } from '@src/types/paginator';
-import { BlocksSearchParams, ETHBlock } from '@src/types/routes/blocks';
+import {
+  BlockFormatted,
+  BlocksSearchParams,
+  ETHBlock,
+} from '@src/types/routes/blocks';
+import moment from 'moment';
 import {
   Accessor,
   Resource,
@@ -55,10 +60,15 @@ class Paginator {
       .from({ length: this.itemsPerPage }, (_, idx) => fromItemNum - idx)
       .map(fetchBlock);
 
-    const [items, setItems] = createSignal<ETHBlock[]>();
+    const [items, setItems] = createSignal<BlockFormatted[]>();
     createEffect(() => {
       (async () => {
-        setItems(await Promise.all(fetchItemsPromises));
+        const items = await Promise.all(fetchItemsPromises);
+        const formattedItems = items.map((item) => ({
+          ...item,
+          timestamp: moment().subtract(item.timestamp).fromNow(),
+        }));
+        setItems(formattedItems);
       })();
     });
 

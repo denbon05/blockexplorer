@@ -7,7 +7,13 @@ const BlockList: Component = () => {
   // fetch data for specific page
   const blocks = paginator.fetchPageData();
 
-  return <For each={blocks()}>{(block) => <Block {...block} />}</For>;
+  return (
+    <div class="d-flex justify-content-center">
+      <ul class="list-group">
+        <For each={blocks()}>{(block) => <Block {...block} />}</For>
+      </ul>
+    </div>
+  );
 };
 
 export default BlockList;
