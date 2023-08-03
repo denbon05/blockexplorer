@@ -1,17 +1,27 @@
 import { usePaginator } from '@src/components/utils/PaginatorProvider';
-import { Component, For } from 'solid-js';
-import Block from './Block';
+import { Component, For, Suspense, SuspenseList, lazy } from 'solid-js';
+import Loading from '../common/Loading';
+
+const BlockInfo = lazy(() => import('./BlockInfo'));
 
 const BlockList: Component = () => {
   const paginator = usePaginator();
   // fetch data for specific page
-  const blocks = paginator.fetchPageData();
+  const blocks = paginator.goToPage();
 
   return (
-    <div class="d-flex justify-content-center">
-      <ul class="list-group">
-        <For each={blocks()}>{(block) => <Block {...block} />}</For>
-      </ul>
+    <div>
+      <SuspenseList revealOrder="forwards" tail="collapsed">
+        <ul class="list-group">
+          <For each={blocks()}>
+            {(block) => (
+              <Suspense fallback={<Loading />}>
+                <BlockInfo block={block} />
+              </Suspense>
+            )}
+          </For>
+        </ul>
+      </SuspenseList>
     </div>
   );
 };

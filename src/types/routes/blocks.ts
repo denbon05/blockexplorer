@@ -1,12 +1,11 @@
 import { Params } from '@solidjs/router';
-import { fetchBlock } from '@src/api';
+import { fetchBlock, fetchTxReceipts } from '@src/api';
+import { ApiReturn } from '../utils';
 
 export type BlocksSearchParams = Params & {
   page?: string;
 };
 
-export type ETHBlock = Awaited<ReturnType<typeof fetchBlock>>;
+export type ETHBlock = ApiReturn<typeof fetchBlock>;
 
-export type BlockFormatted = Omit<ETHBlock, 'timestamp'> & {
-  timestamp: string;
-};
+export type TxReceipts = ApiReturn<typeof fetchTxReceipts>;

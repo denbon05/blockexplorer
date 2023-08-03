@@ -1,7 +1,11 @@
 import { Navigate, Route, Routes } from '@solidjs/router';
 import { type Component } from 'solid-js';
-import Blocks from './pages/Blocks';
 import PaginatorProvider from './components/utils/PaginatorProvider';
+import { BlockData } from './data/block.data';
+import { TransactionData } from './data/transaction.data';
+import BlockMore from './pages/BlockMore';
+import Blocks from './pages/Blocks';
+import Transactions from './pages/Transactions';
 
 /** TODO
  * fetch specific block data by click/extend the item
@@ -27,14 +31,22 @@ const App: Component = () => {
   return (
     <Routes>
       <Route path="/" element={<Navigate href="/blocks" />} />
-      <Route
-        path="/blocks"
-        element={
-          <PaginatorProvider>
-            <Blocks />
-          </PaginatorProvider>
-        }
-      />
+      <Route path="/blocks">
+        <Route
+          path="/"
+          element={
+            <PaginatorProvider>
+              <Blocks />
+            </PaginatorProvider>
+          }
+        />
+        <Route path="/:blockNum" component={BlockMore} data={BlockData} />
+        <Route
+          path="/:blockNum/transactions"
+          component={Transactions}
+          data={TransactionData}
+        />
+      </Route>
     </Routes>
   );
 };

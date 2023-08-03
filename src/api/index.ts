@@ -17,3 +17,5 @@ export const fetchLastBlockNumber = async () => alchemy.core.getBlockNumber();
 
 export const fetchBlock = async (blockNumber: number) =>
   alchemy.core.getBlock(blockNumber);
+
+export const fetchTxReceipts = alchemy.core.getTransactionReceipts;
