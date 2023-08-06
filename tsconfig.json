@@ -10,10 +10,11 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
+    "resolveJsonModule": true,
     "paths": {
       "@src/*": [
         "src/*"
-      ],
+      ]
     },
     "types": [
       "node",

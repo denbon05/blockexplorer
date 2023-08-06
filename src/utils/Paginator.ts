@@ -1,21 +1,22 @@
-import { useSearchParams } from '@solidjs/router';
-import { fetchBlock, fetchLastBlockNumber } from '@src/api';
+import { fetchLastBlockNumber } from '@src/api';
 import type { PaginatorOpts } from '@src/types/paginator';
-import { BlocksSearchParams, ETHBlock } from '@src/types/routes/blocks';
+import { BlocksSearchParams } from '@src/types/routes/blocks';
 import {
   Accessor,
   Resource,
-  Setter,
+  createComputed,
   createResource,
   createSignal,
 } from 'solid-js';
+import { useSearchParams } from '@solidjs/router';
 
 class Paginator {
   private defaultPage = 1;
-  private itemsPerPage: PaginatorOpts['itemsPerPage'];
-  private lastItem: Resource<number>;
-  private page: Accessor<number>;
-  public setPage: (pageNum: number) => Setter<number>;
+  public itemsPerPage: PaginatorOpts['itemsPerPage'];
+  public lastItem: Resource<number>;
+  public page: Accessor<number>;
+  public setPage: (pageNum: number) => void;
+  public refetchLastItemNum: () => void;
 
   constructor({ itemsPerPage }: PaginatorOpts) {
     this.itemsPerPage = itemsPerPage;
@@ -37,40 +38,41 @@ class Paginator {
       setSearchParams({
         page: pageNum,
       });
-      return setPage;
+      setPage(pageNum);
     };
-    this.lastItem = this.fetchLastItemNumber();
+    const [lastBlockNumber, { refetch }] = createResource(fetchLastBlockNumber);
+    this.refetchLastItemNum = refetch;
+    this.lastItem = lastBlockNumber ?? 0;
   }
-
-  private fetchLastItemNumber = () => {
-    const [lastBlockNumber] = createResource(fetchLastBlockNumber);
-    return lastBlockNumber;
-  };
 
   public isLoading = () => this.lastItem.loading;
 
   public goToPage = (page = this.page()) => {
-    // this.setPage(page);
+    this.setPage(page);
+  };
 
-    const maxItemNum = this.lastItem() || 0;
-    // Compute the start and end numbers of the range of items to fetch
-    const toItemNum = maxItemNum - this.page() * this.itemsPerPage;
-    const fromItemNum = toItemNum + this.itemsPerPage;
+  /**
+   * Compute the begin and end numbers of the range of items for page
+   * in DESC order.
+   */
+  public getItemsRange = () => {
+    const [maxNum, setMaxNum] = createSignal<number>(this.lastItem() ?? 0);
+    const [minNum, setMinNum] = createSignal<number>(this.lastItem() ?? 0);
+    createComputed(() => {
+      // Compute the begin and end numbers of the range of items to fetch
+      const lastItemNum =
+        this.lastItem()! - (this.page() - 1) * this.itemsPerPage;
+      const firstItemNum = lastItemNum - this.itemsPerPage;
+      setMaxNum(lastItemNum);
+      setMinNum(firstItemNum);
+    });
 
-    const [items, setItems] = createSignal<Resource<ETHBlock>[]>([]);
-    // batch(() => {
-    const itemResources = Array
-      // create range
-      .from({ length: this.itemsPerPage }, (_, idx) => fromItemNum - idx)
-      .map((itemNumber) => {
-        const [item] = createResource(itemNumber, fetchBlock);
-        return item;
-      });
-    setItems(itemResources);
-    // });
-
-    return items;
+    return {
+      maxNum,
+      minNum,
+    };
   };
 }
 
+// ? Proxy breaks SolidJS behavior, seems like `isLoading` calling recursively
 export default Paginator;

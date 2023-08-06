@@ -1,5 +1,5 @@
 import { Params } from '@solidjs/router';
-import { fetchBlock, fetchTxReceipts } from '@src/api';
+import { fetchBlock, fetchTransaction } from '@src/api';
 import { ApiReturn } from '../utils';
 
 export type BlocksSearchParams = Params & {
@@ -8,4 +8,4 @@ export type BlocksSearchParams = Params & {
 
 export type ETHBlock = ApiReturn<typeof fetchBlock>;
 
-export type TxReceipts = ApiReturn<typeof fetchTxReceipts>;
+export type TxReceipts = ApiReturn<typeof fetchTransaction>;

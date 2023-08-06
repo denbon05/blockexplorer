@@ -3,7 +3,7 @@ import { ETHBlock } from '@src/types/routes/blocks';
 import { Show, type Component, type Resource } from 'solid-js';
 import Loading from '../components/common/Loading';
 
-const BlockMore: Component = () => {
+const BlockAbout: Component = () => {
   // TODO change after https://github.com/solidjs/solid-router/issues/281
   const block = useRouteData() as unknown as Resource<ETHBlock>;
 
@@ -33,4 +33,4 @@ const BlockMore: Component = () => {
   );
 };
 
-export default BlockMore;
+export default BlockAbout;

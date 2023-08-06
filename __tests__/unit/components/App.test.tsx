@@ -1,5 +1,5 @@
 import { render } from '@solidjs/testing-library';
-import App from '../src/App';
+import App from '../../../src/App';
 
 // TODO: mock external requests
 test('Render App component', () => {

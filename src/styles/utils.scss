@@ -1,0 +1,12 @@
+@for $i from 1 through 100 {
+  @if $i % 5 == 0 {
+    // step is 5
+    .left-#{$i} {
+      left: #{$i} + '%';
+    }
+
+    .right-#{$i} {
+      right: #{$i} + '%';
+    }
+  }
+}

@@ -3,16 +3,12 @@ import { type Component } from 'solid-js';
 import PaginatorProvider from './components/utils/PaginatorProvider';
 import { BlockData } from './data/block.data';
 import { TransactionData } from './data/transaction.data';
-import BlockMore from './pages/BlockMore';
+import BlockAbout from './pages/BlockAbout';
 import Blocks from './pages/Blocks';
 import Transactions from './pages/Transactions';
 
 /** TODO
- * fetch specific block data by click/extend the item
- * include list of transactions in extended block item
- * get details about an individual transaction
  * default amount of blocks on per page 20
- * create routing, params like page number
  * make an account page where a user can look up their balance or someone balance
  *
  * SUPERCHARGE
@@ -40,7 +36,7 @@ const App: Component = () => {
             </PaginatorProvider>
           }
         />
-        <Route path="/:blockNum" component={BlockMore} data={BlockData} />
+        <Route path="/:blockNum" component={BlockAbout} data={BlockData} />
         <Route
           path="/:blockNum/transactions"
           component={Transactions}
