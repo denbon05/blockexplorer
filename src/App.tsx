@@ -1,16 +1,17 @@
 import { Navigate, Route, Routes } from '@solidjs/router';
-import { type Component } from 'solid-js';
+import { ErrorBoundary, type Component, lazy } from 'solid-js';
 import PaginatorProvider from './components/utils/PaginatorProvider';
 import { BlockData } from './data/block.data';
 import { TransactionData } from './data/transaction.data';
 import BlockAbout from './pages/BlockAbout';
 import Blocks from './pages/Blocks';
 import Transactions from './pages/Transactions';
+import NavBar from './components/common/NavBar';
+import ErrorFallback from './components/common/ErrorFallback';
+
+const Account = lazy(() => import('./pages/Account'));
 
 /** TODO
- * default amount of blocks on per page 20
- * make an account page where a user can look up their balance or someone balance
- *
  * SUPERCHARGE
  * get list of NFT
  * update list of blocks via WebSocket
@@ -25,25 +26,32 @@ import Transactions from './pages/Transactions';
 
 const App: Component = () => {
   return (
-    <Routes>
-      <Route path="/" element={<Navigate href="/blocks" />} />
-      <Route path="/blocks">
-        <Route
-          path="/"
-          element={
-            <PaginatorProvider>
-              <Blocks />
-            </PaginatorProvider>
-          }
-        />
-        <Route path="/:blockNum" component={BlockAbout} data={BlockData} />
-        <Route
-          path="/:blockNum/transactions"
-          component={Transactions}
-          data={TransactionData}
-        />
-      </Route>
-    </Routes>
+    <ErrorBoundary
+      fallback={(err, reset) => <ErrorFallback err={err} reset={reset} />}
+    >
+      <NavBar />
+
+      <Routes>
+        <Route path="/account/:address" component={Account} />
+        <Route path="/" element={<Navigate href="/blocks" />} />
+        <Route path="/blocks">
+          <Route
+            path="/"
+            element={
+              <PaginatorProvider>
+                <Blocks />
+              </PaginatorProvider>
+            }
+          />
+          <Route path="/:blockNum" component={BlockAbout} data={BlockData} />
+          <Route
+            path="/:blockNum/transactions"
+            component={Transactions}
+            data={TransactionData}
+          />
+        </Route>
+      </Routes>
+    </ErrorBoundary>
   );
 };
 

@@ -1,29 +1,19 @@
 import { useRouteData } from '@solidjs/router';
 import Loading from '@src/components/common/Loading';
-import Transaction from '@src/components/transactions/Transaction';
+import TransactionList from '@src/components/transactions/TransactionList';
 import type { ITxData } from '@src/types/routes/transactions';
-import { Component, For, Resource, Show } from 'solid-js';
+import { Component, Resource, Show } from 'solid-js';
 
 const Transactions: Component = () => {
   // TODO change after https://github.com/solidjs/solid-router/issues/281
-  const transactions = useRouteData() as unknown as Resource<ITxData>;
+  const txData = useRouteData() as unknown as Resource<ITxData>;
 
   return (
-    <Show when={!transactions.loading} fallback={<Loading />}>
+    <Show when={!txData.loading} fallback={<Loading />}>
       <div class="container py-2">
         <div class="row justify-content-center">
           <div class="col-10 col-lg-8 list-group">
-            <For each={transactions()?.transactions}>
-              {(txHash) => (
-                <Transaction
-                  txHash={txHash}
-                  time={{
-                    timestamp: transactions()!.timestamp,
-                    fromNowTime: transactions()!.fromNowTime,
-                  }}
-                />
-              )}
-            </For>
+            <TransactionList tx={txData()!} />
           </div>
         </div>
       </div>

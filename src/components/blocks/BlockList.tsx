@@ -18,11 +18,10 @@ const BlockInfo = lazy(() => import('./BlockInfo'));
 
 const BlockList: Component = () => {
   const paginator = usePaginator();
-  const { minNum, maxNum } = paginator.getItemsRange();
+  const { maxNum } = paginator.getItemsRange();
 
   const [blocks, setBlocks] = createSignal<Resource<ETHBlock>[]>();
   createEffect(() => {
-    console.log({ minNum: minNum(), maxNum: maxNum() });
     const fetchBlockResources = Array
       // create range
       .from(
@@ -45,7 +44,7 @@ const BlockList: Component = () => {
           <For each={blocks()}>
             {(block) => (
               <Suspense fallback={<Loading />}>
-                {block() && <BlockInfo block={block()!} />}
+                <BlockInfo block={block()!} />
               </Suspense>
             )}
           </For>
