@@ -18,6 +18,8 @@ This particular project is very much open-ended. We'll add some challenges here 
 
 ## Dev
 
+Retrieve and put `APP_ALCHEMY_API_KEY` to the `.env` file in the root directory.
+
 ```bash
 npm ci
 make start
