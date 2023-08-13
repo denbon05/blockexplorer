@@ -3,7 +3,7 @@ import { APP_ALCHEMY_API_KEY } from '../constants';
 
 const settings: AlchemySettings = {
   apiKey: APP_ALCHEMY_API_KEY,
-  network: Network.ETH_MAINNET,
+  network: Network.ETH_GOERLI,
 };
 
 // In this week's lessons we used ethers.js. Here we are using the

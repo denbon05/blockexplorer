@@ -3,7 +3,7 @@ import { fetchBlock } from '@src/api';
 import { ETHBlock } from '@src/types/routes/blocks';
 import { Resource, createResource } from 'solid-js';
 
-export const BlockData: RouteDataFunc = ({
+const BlockData: RouteDataFunc = ({
   location,
 }: RouteDataFuncArgs): Resource<ETHBlock> => {
   // the last part of the path is the block number
@@ -17,3 +17,5 @@ export const BlockData: RouteDataFunc = ({
 
   return block;
 };
+
+export default BlockData;

@@ -8,10 +8,11 @@ import {
   type Resource,
 } from 'solid-js';
 import Loading from '../components/common/Loading';
+import type BlockData from '@src/data/block.data';
 
 const BlockAbout: Component = () => {
   // TODO change after https://github.com/solidjs/solid-router/issues/281
-  const blockSrc = useRouteData() as unknown as Resource<ETHBlock>;
+  const blockSrc = useRouteData<typeof BlockData>() as Resource<ETHBlock>;
   const [areTxsVisible, setTxsVisibility] = createSignal(false);
 
   return (

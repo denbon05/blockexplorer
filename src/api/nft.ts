@@ -1,3 +1,4 @@
 import { alchemy } from './init';
 
-// alchemy.nft.
+export const fetchNftsForOwner = async (address: string) =>
+  alchemy.nft.getNftsForOwner(address);

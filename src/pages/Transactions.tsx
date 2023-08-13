@@ -1,4 +1,5 @@
 import { useRouteData } from '@solidjs/router';
+import type { TransactionData } from '@src/data/transaction.data';
 import Loading from '@src/components/common/Loading';
 import TransactionList from '@src/components/transactions/TransactionList';
 import type { ITxData } from '@src/types/routes/transactions';
@@ -6,7 +7,7 @@ import { Component, Resource, Show } from 'solid-js';
 
 const Transactions: Component = () => {
   // TODO change after https://github.com/solidjs/solid-router/issues/281
-  const txData = useRouteData() as unknown as Resource<ITxData>;
+  const txData = useRouteData<typeof TransactionData>() as Resource<ITxData>;
 
   return (
     <Show when={!txData.loading} fallback={<Loading />}>

@@ -1,12 +1,14 @@
 import { fetchBlock, fetchLastBlockNumber } from './blocks';
-import { fetchTransaction, fetchTxRecipe } from './transactions';
 import { fetchBalance, fetchGasPrice } from './common';
+import { fetchTransaction, fetchTxRecipe } from './transactions';
+import { subscribeTo } from './ws';
 
 export {
+  fetchBalance,
   fetchBlock,
+  fetchGasPrice,
   fetchLastBlockNumber,
   fetchTransaction,
   fetchTxRecipe,
-  fetchBalance,
-  fetchGasPrice,
+  subscribeTo as subscribeTo,
 };

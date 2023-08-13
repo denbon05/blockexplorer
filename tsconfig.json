@@ -9,6 +9,7 @@
     "jsxImportSource": "solid-js",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
+    "useUnknownInCatchVariables": false,
     "baseUrl": ".",
     "resolveJsonModule": true,
     "paths": {
